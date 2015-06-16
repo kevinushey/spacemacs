@@ -235,6 +235,12 @@
       ;; See: https://github.com/magit/magit/wiki/FAQ#windows-cannot-push-via-https
       (when (eq window-system 'w32)
         (setenv "GIT_ASKPASS" "git-gui--askpass"))
+      ;; Allow ':q', ':wq' to confirm commits
+      (add-hook
+       'git-commit-mode-hook
+       (lambda ()
+         (evil-ex-define-cmd "q[uit]" 'git-commit-commit)
+         (evil-ex-define-cmd "wq" 'git-commit-commit)))
       (evil-leader/set-key
         "gb" 'magit-blame-mode
         "gl" 'magit-log
